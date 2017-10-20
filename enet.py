@@ -415,6 +415,8 @@ def ENet(inputs,
     inputs_shape = inputs.get_shape().as_list()
     inputs.set_shape(shape=(batch_size, inputs_shape[1], inputs_shape[2], inputs_shape[3]))
 
+    #HACK
+    scope = ''
     with tf.variable_scope(scope, reuse=reuse):
         #Set the primary arg scopes. Fused batch_norm is faster than normal batch norm.
         with slim.arg_scope([initial_block, bottleneck], is_training=is_training),\
