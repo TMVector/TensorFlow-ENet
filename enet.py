@@ -195,12 +195,19 @@ def bottleneck(inputs,
         #=============DOWNSAMPLING BOTTLENECK====================
         if downsampling:
             #=============MAIN BRANCH=============
-            #Just perform a max pooling
-            net_main, pooling_indices = tf.nn.max_pool_with_argmax(inputs,
-                                                                   ksize=[1,2,2,1],
-                                                                   strides=[1,2,2,1],
-                                                                   padding='SAME',
-                                                                   name=scope+'_main_max_pool')
+            #### Pretend MaxPoolWithArgmax doesn't exist for now...
+            net_main = tf.nn.max_pool(inputs,
+                                      ksize=[1,2,2,1],
+                                      strides=[1,2,2,1],
+                                      padding='SAME',
+                                      name=scope+'_main_max_pool')
+            pooling_indices = tf.to_int64(net_main)
+            #  #Just perform a max pooling
+            #  net_main, pooling_indices = tf.nn.max_pool_with_argmax(inputs,
+            #                                                         ksize=[1,2,2,1],
+            #                                                         strides=[1,2,2,1],
+            #                                                         padding='SAME',
+            #                                                         name=scope+'_main_max_pool')
 
             #First get the difference in depth to pad, then pad with zeros only on the last dimension.
             inputs_shape = inputs.get_shape().as_list()
